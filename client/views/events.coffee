@@ -19,7 +19,6 @@ Template.eventsList.events(
 
 Template.eventsForm.events(
   'submit .events-add-form': (e)->
-    debugger
     form = e.target
     # TODO validation, formatting, etc
     Events.insert(
