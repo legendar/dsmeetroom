@@ -1,0 +1,27 @@
+<template name="eventsList">
+  <div class="events-filter">
+    <a href data-filter="day">day</a>
+    <a href data-filter="week">week</a>
+    <a href data-filter="month">month</a>
+  </div>
+  <div class="events-list">
+    {{#each list}}
+      {{>eventsRow .}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="eventsRow">
+  <div class="events-row">
+    {{title}} - ({{datetime}})
+  </div>
+</template>
+
+<template name="eventsForm">
+  <form class="events-add-form">
+    <label> Title: <input type="text" name="title" /></label>
+    <label> Date/Time: <input type="datetime-local" name="datetime" /></label>
+    <label> Duration (mim): <input type="number" name="duration" min="0" max="60" value="0" /></label>
+    <input type="submit" />
+  </form>
+</template>
