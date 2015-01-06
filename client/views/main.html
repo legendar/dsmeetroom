@@ -8,7 +8,9 @@
     {{! TODO styles, we can use accounts-ui-unstyled }}
     {{>loginButtons}}
 
-    {{>eventsForm}}
+    {{#if currentUser}}
+      {{>eventsForm}}
+    {{/if}}
     {{>eventsList}}
   </div>
 </body>
