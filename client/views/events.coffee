@@ -24,6 +24,8 @@ Template.eventsForm.events(
     Events.insert(
       datetime: form.datetime.value
       title: form.title.value
+      ownerId: Meteor.userId()
+      ownerName: Meteor.user().profile.name
     )
     # prevent default
     return false
