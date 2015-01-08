@@ -1,16 +1,17 @@
 
 # can be one of 'day', 'week', 'month'
 # TODO localStorage
-Session.set('filter', 'week')
+Session.set('filter', 'month')
 
 # NOTE can't use 'events' as template name
 # seems issue in meteor
 Template.eventsList.helpers(
   list: ->
+    filter = Session.get('filter')
+
     calcPeriodQuery = ->
       # start of current day
       now = moment().hour(0).minute(0).second(0)
-      filter = Session.get('filter')
       switch filter
         when 'week'
           # start of week
@@ -23,9 +24,27 @@ Template.eventsList.helpers(
         $lt: now.add(1, filter + 's').valueOf()
       }
 
-    Events.find(
+    items = Events.find(
       datetime: calcPeriodQuery()
-    )
+    ).fetch()
+
+    _(items)
+      .chain()
+      .map((item)=>
+        day = moment(item.datetime)
+        switch filter
+          when 'day'
+            day = 'today'
+          when 'week'
+            day = day.day()
+          when 'month'
+            day = day.date()
+        item.day = day
+        return item
+      )
+      .groupBy('day')
+      .map (items, day)=> {day, items}
+      .value()
 )
 
 Template.eventsRow.helpers(
