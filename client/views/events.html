@@ -4,10 +4,10 @@
     <a href data-filter="week">week</a>
     <a href data-filter="month">month</a>
   </div>
-  <div class="events-list">
+  <div class="events-list {{currentFilter}}">
     {{#each list}}
       <div class="events-day-row">
-        <b>{{day}}</b>
+        <span class="daynum">{{day}}</span>
         {{#each items}}
           {{>eventsRow .}}
         {{/each}}
@@ -17,10 +17,11 @@
 </template>
 
 <template name="eventsRow">
-  <div class="events-row">
-    <div class="col-xs-4">{{ownerName}}</div>
+  <div class="events-row {{genClassName}}">
+    <!--<div class="col-xs-4">{{ownerName}}</div>
     <div class="col-xs-4">{{title}}</div>
-    <div class="col-xs-4">({{date datetime}})</div>
+    <div class="col-xs-4">({{date datetime}})</div>-->
+    <div class="col-xs-12">{{title}} {{time}}</div>
   </div>
 </template>
 

@@ -2,4 +2,48 @@
 
 @import "bootstrap/custom.bootstrap.import.less";
 
-.events-row { .make-row() }
+.events-list {
+  width: 100%;
+  height: 100%;
+}
+
+.events-list.month {
+  font-size: 0;
+}
+.events-list.month .events-day-row {
+  font-size: 14px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #DDD;
+  margin-left: -1px;
+  margin-top: -1px;
+  padding: 2px 5px;
+  display: inline-block;
+  overflow: hidden;
+}
+.events-list.month .daynum {
+  position: absolute;
+  opacity: 0.1;
+  font-size: 32px;
+}
+
+.events-row {
+  .make-row();
+}
+
+.events-row.v1 {
+  font-family: 'Marck Script', cursive;
+}
+
+.events-row.v2 {
+  font-family: 'Bad Script', cursive;
+}
+
+.events-row.v3 {
+  font-family: 'Neucha', cursive;
+}
+
+.events-row.c1 { color: blue; }
+.events-row.c2 { color: green; }
+.events-row.c3 { color: red; }
+.events-row.c4 { color: navy; }
