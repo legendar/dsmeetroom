@@ -82,3 +82,6 @@ Template.eventsForm.events(
     return false
 )
 
+Template.eventsForm.rendered = ->
+  @$('.datetime').datetimepicker()
+

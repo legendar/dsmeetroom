@@ -28,7 +28,7 @@
 <template name="eventsForm">
   <form class="events-add-form">
     <label> Title: <input type="text" name="title" /></label>
-    <label> Date/Time: <input type="datetime-local" name="datetime" /></label>
+    <label> Date/Time: <input size="16" type="text" readonly class="datetime" name="datetime"></label>
     <label> Duration (mim): <input type="number" name="duration" min="0" max="60" value="0" /></label>
     <input type="submit" />
   </form>
