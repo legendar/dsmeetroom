@@ -6,7 +6,12 @@
   </div>
   <div class="events-list">
     {{#each list}}
-      {{>eventsRow .}}
+      <div class="events-day-row">
+        <b>{{day}}</b>
+        {{#each items}}
+          {{>eventsRow .}}
+        {{/each}}
+      </div>
     {{/each}}
   </div>
 </template>
@@ -15,7 +20,7 @@
   <div class="events-row">
     <div class="col-xs-4">{{ownerName}}</div>
     <div class="col-xs-4">{{title}}</div>
-    <div class="col-xs-4">({{datetime}})</div>
+    <div class="col-xs-4">({{date datetime}})</div>
   </div>
 </template>
 

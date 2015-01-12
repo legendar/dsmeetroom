@@ -13,3 +13,5 @@ coffeescript
 nemo64:bootstrap
 accounts-google
 accounts-ui
+momentjs:moment
+rzymek:moment-locale-ru
