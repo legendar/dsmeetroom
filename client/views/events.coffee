@@ -57,8 +57,9 @@ Template.eventsList.helpers(
 )
 
 Template.eventsRow.helpers(
-  date: (d)-> moment(d).format('dddd, D MMMM, h:mm')
-  time: (d)-> moment(d).format('h:mm')
+  formatDate: (d)-> moment(d).format('dddd, D MMMM, h:mm')
+  formatTime: (d)-> moment(d).format('h:mm')
+  formatDuration: (d)-> moment.duration(d).humanize()
   genClassName: -> 'v' + getRandomInt(1,3) + ' c' + getRandomInt(1,4)
 )
 
@@ -74,14 +75,48 @@ Template.eventsForm.events(
     # TODO validation, formatting, etc
     Events.insert(
       datetime: moment(form.datetime.value).valueOf()
+      duration: moment.duration(form.duration.value).as('milliseconds')
       title: form.title.value
       ownerId: Meteor.userId()
       ownerName: Meteor.user().profile.name
     )
     # prevent default
     return false
+  'change .datetime': (e)->
+    setupDurationPicker(
+      moment($(e.target).val())
+    )
 )
 
+setupDurationPicker = (from)->
+  dayStart = moment(from).hour(0).minute(0).second(0)
+  #value = @$('.duration').val()
+  @$('.duration-btn')
+    #.val(
+    #  moment(dayStart).add(moment.duration(value)).format('YYYY-MM-DD HH:MM')
+    #)
+    .datetimepicker('remove')
+    .datetimepicker(
+      #format: 'hh:ii'
+      linkField: 'duration'
+      linkFormat: 'hh:ii'
+      startView: 1
+      autoclose: true
+      startDate: dayStart.format('YYYY-MM-DD') + ' 00:00'
+      endDate: dayStart.add(
+        moment.duration(24, 'hours').subtract(
+          moment.duration(moment(from))
+        )
+      ).format('YYYY-MM-DD HH:MM')
+    )
+    #.val(value)
+
 Template.eventsForm.rendered = ->
-  @$('.datetime').datetimepicker()
+  @$('.datetime').datetimepicker(
+    format: 'd M yyyy, hh:ii'
+    autoclose: true
+    startDate: moment().format('YYYY-MM-DD HH:MM')
+  )
+  setupDurationPicker(moment())
+
 
