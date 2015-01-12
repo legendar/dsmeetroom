@@ -15,3 +15,4 @@ accounts-google
 accounts-ui
 momentjs:moment
 rzymek:moment-locale-ru
+mikehaney:bootstrap-datetimepicker

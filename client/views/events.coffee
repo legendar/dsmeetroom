@@ -28,7 +28,14 @@ Template.eventsList.helpers(
       datetime: calcPeriodQuery()
     ).fetch()
 
-    _(items)
+    defaultItems = ->
+      # TODO review
+      # count of days in month
+      # expand to square (fill with prev/next months days)
+      # add for week and day
+      JSON.parse("{\"#{_.range(1,32).join('":[],"')}\":[]}")
+
+    items = _(items)
       .chain()
       .map((item)=>
         day = moment(item.datetime)
@@ -43,16 +50,20 @@ Template.eventsList.helpers(
         return item
       )
       .groupBy('day')
-      .map (items, day)=> {day, items}
+      .defaults defaultItems()
+      .map (items, day)=> {day, items: _(items).sortBy('datetime')}
       .value()
+  currentFilter: -> Session.get('filter')
 )
 
 Template.eventsRow.helpers(
   date: (d)-> moment(d).format('dddd, D MMMM, h:mm')
+  time: (d)-> moment(d).format('h:mm')
+  genClassName: -> 'v' + getRandomInt(1,3) + ' c' + getRandomInt(1,4)
 )
 
 Template.eventsList.events(
-  'click .events-filter': (e)->
+  'click .events-filter a': (e)->
     Session.set('filter', $(e.target).data('filter'))
     return false
 )
@@ -70,4 +81,7 @@ Template.eventsForm.events(
     # prevent default
     return false
 )
+
+Template.eventsForm.rendered = ->
+  @$('.datetime').datetimepicker()
 
